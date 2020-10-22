@@ -1,0 +1,36 @@
+{
+  "name": "expand-team-reviewers",
+  "version": "1.0.0",
+  "description": "GitHub action that expands a team reviewer into list of individual reviewers",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "prettier --check 'src/**/*.ts' && rollup -c",
+    "clean": "rm -R dist",
+    "lint:fix": "prettier --write ."
+  },
+  "keywords": [],
+  "author": "",
+  "devDependencies": {
+    "@octokit/webhooks": "^7.15.0",
+    "@rollup/plugin-commonjs": "^15.1.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-typescript": "^6.0.0",
+    "@types/node": "^14.14.2",
+    "@typescript-eslint/eslint-plugin": "^4.5.0",
+    "@typescript-eslint/parser": "^4.5.0",
+    "eslint": "^7.11.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
+    "prettier": "2.1.2",
+    "rollup": "^2.32.1",
+    "typescript": "^4.0.3"
+  },
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/github": "^4.0.0"
+  }
+}
