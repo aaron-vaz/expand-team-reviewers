@@ -1,0 +1,13 @@
+name: Expand Team Reviewers
+
+on:
+  pull_request:
+    types: [opened, review_requested]
+
+jobs:
+  expand-team-reviewers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: aaron-vaz/expand-team-reviewers@testing
+        with:
+          token: "${{ secrets.GITHUB_TOKEN }}"

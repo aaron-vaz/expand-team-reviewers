@@ -17,28 +17,28 @@ async function run() {
 
   const payload = context.payload as EventPayloads.WebhookPayloadPullRequest;
 
+  core.info("Requesting info for PR");
+
   await client.pulls
     .get({
       owner: payload.repository.owner.login,
       repo: payload.repository.name,
       pull_number: payload.pull_request.number,
     })
-    .then((res) =>
-      Promise.all(
-        res.data.requested_teams
-          .map((team) => team.slug)
-          .map((team) =>
-            client.teams.listMembersInOrg({
-              org: payload.repository.owner.login,
-              team_slug: team,
-            })
-          )
-      )
-    )
     .then((res) => {
-      const reviewers = res
-        .flatMap((payload) => payload.data)
-        .map((member) => member.login);
+      const team = res.data.requested_teams.map((team) => team.slug)[0];
+
+      core.info(`Getting members from the following team: ${team}`);
+
+      return client.teams.listMembersInOrg({
+        org: payload.repository.owner.login,
+        team_slug: team,
+      });
+    })
+    .then((res) => {
+      const reviewers = res.data.map((member) => member.login);
+
+      core.info(`Requesting reviews from the following members: ${reviewers}`);
 
       return client.pulls.requestReviewers({
         owner: payload.repository.owner.login,
@@ -49,4 +49,4 @@ async function run() {
     });
 }
 
-run().catch((e) => core.setFailed(e.message));
+run().catch(core.setFailed);
