@@ -17,28 +17,50 @@ async function run() {
 
   const payload = context.payload as EventPayloads.WebhookPayloadPullRequest;
 
+  core.info("Requesting info for PR");
+
   await client.pulls
     .get({
       owner: payload.repository.owner.login,
       repo: payload.repository.name,
       pull_number: payload.pull_request.number,
     })
-    .then((res) =>
-      Promise.all(
-        res.data.requested_teams
+    .then((res) => {
+      const requestedTeams = res.data.requested_teams;
+
+      if (requestedTeams.length === 0) {
+        core.info("No teams reviewers added to this PR");
+        return;
+      }
+
+      return Promise.all(
+        requestedTeams
           .map((team) => team.slug)
-          .map((team) =>
-            client.teams.listMembersInOrg({
+          .map((team) => {
+            core.info(`Getting members from the following team: ${team}`);
+
+            return client.teams.listMembersInOrg({
               org: payload.repository.owner.login,
               team_slug: team,
-            })
-          )
-      )
-    )
+            });
+          })
+      );
+    })
     .then((res) => {
+      if (!res) {
+        return;
+      }
+
       const reviewers = res
         .flatMap((payload) => payload.data)
-        .map((member) => member.login);
+        .map((member) => member.login)
+        .filter((login) => login !== payload.pull_request.user.login); // filter out author of PR
+
+      if (reviewers.length === 0) {
+        core.info("Team reviewers are only made up of the author of the PR");
+      }
+
+      core.info(`Requesting reviews from the following members: ${reviewers}`);
 
       return client.pulls.requestReviewers({
         owner: payload.repository.owner.login,
@@ -49,4 +71,4 @@ async function run() {
     });
 }
 
-run().catch((e) => core.setFailed(e.message));
+run().catch(core.setFailed);

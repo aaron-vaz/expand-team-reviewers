@@ -1,8 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES2020",
-    "lib": ["ES2020"],
+    "target": "ES6",
+    "lib": ["ES2019.Array"],
+    "module": "CommonJS",
     "moduleResolution": "Node",
+    "rootDir": "./src",
+    "outDir": "lib",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
