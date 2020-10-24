@@ -1,0 +1,9 @@
+name: "Expand Team Reviewers"
+description: "Expands team reviewers into list of individual reviewers"
+inputs:
+  token:
+    description: "Token used to access the GitHub API"
+    required: true
+runs:
+  using: "node12"
+  main: "dist/index.js"

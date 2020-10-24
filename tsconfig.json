@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "lib": ["ES2019.Array"],
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "rootDir": "./src",
+    "outDir": "lib",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true
+  }
+}
