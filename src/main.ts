@@ -66,7 +66,7 @@ async function run() {
         owner: payload.repository.owner.login,
         repo: payload.repository.name,
         pull_number: payload.pull_request.number,
-        reviewers: reviewers,
+        reviewers: [...new Set(reviewers)], // the same members can be in multiple teams so we only get a list of unique members
       });
     });
 }

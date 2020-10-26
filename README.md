@@ -8,7 +8,7 @@ This action expands any team reviewers added to a PR into a individual reviewers
 
 **Required** The token used to access the GitHub API.
 
-Please note that this token cannot be the default action token `{{ secrets.GITHUB_TOKEN }}` as that doesn't have the necessary organisation permissions. 
+Please note that this token cannot be the default action token `{{ secrets.GITHUB_TOKEN }}` as that doesn't have the necessary organisation permissions.
 Please use a personal access token with `repo` and `org` scopes using [encrypted secrets](https://docs.github.com/en/free-pro-team@latest/actions/reference/encrypted-secrets).
 
 ## Example usage
