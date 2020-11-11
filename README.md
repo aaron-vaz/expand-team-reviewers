@@ -24,7 +24,7 @@ jobs:
   expand-team-reviewers:
     runs-on: ubuntu-latest
     steps:
-      - uses: aaron-vaz/expand-team-reviewers@v0.1.0
+      - uses: aaron-vaz/expand-team-reviewers@v1.0.0
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 ```
