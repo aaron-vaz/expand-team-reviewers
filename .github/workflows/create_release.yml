@@ -1,0 +1,29 @@
+name: Create Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: Create Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@master
+      - name: Get Version
+        id: version
+        run: >
+          echo "::set-output name=version::$(cat package.json | grep -oP '(?<="version": ").*(?=",)')"
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_NAME: ${{ steps.version.outputs.version }}
+        with:
+          tag_name: v${{ env.RELEASE_NAME }}
+          release_name: v${{ env.RELEASE_NAME }}
+          draft: false
+          prerelease: false
