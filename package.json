@@ -1,8 +1,8 @@
 {
   "name": "expand-team-reviewers",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "GitHub action that expands a team reviewer into list of individual reviewers",
-  "main": "dist/main.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "prettier --check 'src/**/*.ts' && tsc --pretty && ncc build lib/main.js",
     "clean": "rm -R lib dist",
