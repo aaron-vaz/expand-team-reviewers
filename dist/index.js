@@ -90,6 +90,7 @@ module.exports = /******/ (() => {
       const core = __importStar(__webpack_require__(147));
       const github = __importStar(__webpack_require__(364));
       function run() {
+        var _a;
         return __awaiter(this, void 0, void 0, function* () {
           const context = github.context;
           if (context.eventName !== "pull_request") {
@@ -142,6 +143,20 @@ module.exports = /******/ (() => {
               reviewers: [...new Set(reviewers)],
             });
           });
+          const triggerLabel = core.getInput("label-used-to-trigger");
+          if (
+            ((_a = payload.label) === null || _a === void 0
+              ? void 0
+              : _a.name) === triggerLabel
+          ) {
+            core.info(`Removing label ${triggerLabel} from the PR`);
+            yield client.issues.removeLabel({
+              owner: payload.repository.owner.login,
+              repo: payload.repository.name,
+              issue_number: payload.pull_request.number,
+              name: triggerLabel,
+            });
+          }
         });
       }
       run().catch(core.setFailed);

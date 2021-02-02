@@ -18,13 +18,14 @@ name: Expand Team Reviewers
 
 on:
   pull_request: # Action only run on PR triggers. It will fail on other triggers
-    types: [opened, review_requested]
+    types: [opened, labeled]
 
 jobs:
   expand-team-reviewers:
+    if: ${{ github.event_name != 'labeled' || github.event.label.name == 'expand team reviewers' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: aaron-vaz/expand-team-reviewers@v1.0.1
+      - uses: aaron-vaz/expand-team-reviewers@v1.1.0
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
 ```

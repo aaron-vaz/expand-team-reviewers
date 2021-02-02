@@ -62,6 +62,19 @@ async function run() {
       reviewers: [...new Set(reviewers)], // the same members can be in multiple teams so we only get a list of unique members
     });
   });
+
+  // if a label was used to trigger the action we want to remove it after execution
+  const triggerLabel = core.getInput("label-used-to-trigger");
+  if (payload.label?.name === triggerLabel) {
+    core.info(`Removing label ${triggerLabel} from the PR`);
+
+    await client.issues.removeLabel({
+      owner: payload.repository.owner.login,
+      repo: payload.repository.name,
+      issue_number: payload.pull_request.number,
+      name: triggerLabel,
+    });
+  }
 }
 
 run().catch(core.setFailed);
