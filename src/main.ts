@@ -66,7 +66,7 @@ async function run() {
   // if a label was used to trigger the action we want to remove it after execution
   const triggerLabel = core.getInput("label-used-to-trigger");
   if (payload.label?.name === triggerLabel) {
-    core.info(`Removing label ${triggerLabel} from the PR`);
+    core.info(`Removing label "${triggerLabel}" from the PR`);
 
     await client.issues.removeLabel({
       owner: payload.repository.owner.login,

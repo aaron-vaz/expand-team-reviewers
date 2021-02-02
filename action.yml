@@ -5,7 +5,7 @@ inputs:
     description: "Token used to access the GitHub API"
     required: true
   label-used-to-trigger:
-    description: "Name of the pull request label that will be used to trigger this action so it can be removed after execution"
+    description: "Name of the pull request label that was used to trigger this action so it can be removed after execution"
     required: false
     default: "expand team reviewers"
 runs:
